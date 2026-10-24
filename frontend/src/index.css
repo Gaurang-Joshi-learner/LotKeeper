@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --floor: 217 219 213;   /* concrete */
+  --surface: 244 245 241;
+  --ink: 21 24 27;
+  --muted: 91 99 106;
+  --line: 191 195 187;
+  --enamel: 14 77 63;     /* brand green */
+  --plate: 242 194 48;    /* number-plate yellow */
+  --brake: 184 58 36;
+}
+.dark {
+  --floor: 18 21 22;
+  --surface: 27 31 33;
+  --ink: 236 238 233;
+  --muted: 154 163 168;
+  --line: 45 51 54;
+  --enamel: 63 181 150;
+  --plate: 242 194 48;
+  --brake: 229 101 76;
+}
+
+@layer base {
+  :root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
+  body { @apply bg-floor font-sans text-ink antialiased; font-variant-numeric: tabular-nums; }
+  h1, h2, h3 { @apply font-display; }
+  :focus-visible { outline: 3px solid rgb(var(--plate)); outline-offset: 2px; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-45; }
+  .btn-primary { @apply btn bg-enamel text-white hover:brightness-110 dark:text-floor; }
+  .btn-ghost { @apply btn border border-line bg-transparent text-ink hover:bg-ink/5; }
+  .btn-danger { @apply btn bg-brake text-white hover:brightness-110 dark:text-floor; }
+  .field { @apply w-full rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-muted; }
+}
+
+/* Number-plate stock badge: the one memorable element in the UI. */
+.plate {
+  background: rgb(var(--plate));
+  color: #15181b;
+  border: 2px solid #15181b;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 2px rgb(var(--plate)), inset 0 0 0 3px #15181b55;
+}
+.plate-soldout {
+  background: repeating-linear-gradient(-45deg, rgb(var(--brake)) 0 6px, rgb(var(--brake) / 0.78) 6px 12px);
+  color: #fff;
+  border-color: #15181b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
